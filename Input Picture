@@ -1,0 +1,19 @@
+//Programmer: Steven Padillo
+//Program:    Input picture
+
+#include(iostream);
+using namespace std;
+
+int main() 
+{
+  string filename;
+  ifstream datafile;
+  
+  //input
+  cout << "Please enter the input fule name: ";
+  cin >> filename;
+  datafile.open( filename.c_str() );
+  
+return 0;
+}
+  
