@@ -1,0 +1,42 @@
+//Programmer: Steven L Padillo
+//Program:    Detector
+//Purpose:    Detect color/pixel within an image
+//Credit source?     Used source from user3157892 on Stack Overflow https://stackoverflow.com/questions/23791775/finding-all-objects-in-an-image-based-on-color
+
+#include<iostream>
+
+//create an array of numClusters colors
+int colors[numClusters];
+for(int i = 0; i < numClusters; i++)
+{
+  colors[i] = 255/(i+1);
+}
+
+std::vector<cv::Mat> layers;
+
+for(int i = 0; i < numClusters; i++)
+{
+  layers.push_back(cv::Mat::zeros(src.row,src.cols,cv_32F))
+}
+
+//use the labels to draw the layers
+//using the array of colors, draw the pixels onto each label image
+for( int y = 0; y < src.rows; y++ )
+{
+    for( int x = 0; x < src.cols; x++ )
+    { 
+        int cluster_idx = labels.at<int>(y + x*src.rows,0);
+        layers[cluster_idx].at<float>(y, x) = (float)(colors[cluster_idx]);;
+    }
+}
+
+std::vector<cv::Mat> srcLayers;
+
+//each layer to mask a portion of the original image
+//this leaves us with sections of similar color from the original image
+for(int i = 0; i < numClusters; i++)
+{
+    layers[i].convertTo(layers[i], CV_8UC1);
+    srcLayers.push_back(cv::Mat());
+    src.copyTo(srcLayers[i], layers[i]);
+}
